@@ -5,16 +5,8 @@
 # Learn_Coding_Test
 Coding Test를 위한 내용입니다.
 
-### 목표
-- [ ] : [목적을 이루기 위한 목표2](목표 2 사이트)
-
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
-
-### 참조
-
-- [참조링크](참조링크)
-
 
 ---
 
