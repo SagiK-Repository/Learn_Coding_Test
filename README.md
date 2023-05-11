@@ -24,7 +24,7 @@ C#은 많이 없다.
 
 # 1단계
 
-- [백준 스텝](https://www.acmicpc.net/step) 연습
+- (백준 사이트 > 문제 > 단계별로 풀어보기) [백준 스텝](https://www.acmicpc.net/) 연습
   - 어려운 것 넘길 것
   - 17단계 전 까지
 - [programmers school](https://school.programmers.co.kr/learn/challenges?order=recent&page=1)
