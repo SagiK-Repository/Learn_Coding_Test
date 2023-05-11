@@ -22,7 +22,7 @@ C#은 많이 없다.
 처음 한다면 기초부터.  
 
 
-# 1단계 아기걸음
+# 1단계
 
 - [백준 스텝](https://www.acmicpc.net/step) 연습
   - 어려운 것 넘길 것
@@ -33,7 +33,7 @@ C#은 많이 없다.
   - 언어별 선택 가능
 
 
-# 2단계 걷기
+# 2단계
 
 - bfs 및 dfs 개념을 모를 시 구현력을 먼저 공부한다.
 - 구현력 연습
@@ -42,7 +42,7 @@ C#은 많이 없다.
   - [프로그래머스](https://school.programmers.co.kr/learn/challenges?order=recent&languages=cpp)
 
 
-# 3단계 뛰기
+# 3단계
 
 - 자료구조 포함된 문제 풀기
   - 예) 큐, 스택, 디큐, 트리
@@ -52,8 +52,3 @@ C#은 많이 없다.
 - 카카오를 준비한다면 아래 사이트를 전부 풀어봐야 한다.
   - [프로그래머스 선택 사이트](https://school.programmers.co.kr/learn/challenges?order=recent&languages=cpp)
     <img src="https://user-images.githubusercontent.com/66783849/235521685-688e5e42-d355-4104-84c5-0a94e58f5fc4.png"/>
-
-# 4단계 전문가
-
-
-# 5단계 고인물
