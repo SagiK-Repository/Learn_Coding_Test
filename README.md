@@ -30,7 +30,9 @@ C#은 많이 없다.
 - [programmers school](https://school.programmers.co.kr/learn/challenges?order=recent&page=1)
   - 0단계는 의미 없을 수 있다
   - 2단계 까지는 풀어봐야 한다
-  - 언어별 선택 가능
+  - 언어별 선택 가능  
+    <img src="https://user-images.githubusercontent.com/66783849/238279157-21711b84-0a71-40e1-b2f8-2a90af281f6b.png"/>
+
 
 
 # 2단계
