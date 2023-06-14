@@ -42,6 +42,8 @@ C#은 많이 없다.
   - [백준 연습용](https://www.acmicpc.net/problem/tags) 및 기타 문제들
 - 실전용 연습
   - [프로그래머스](https://school.programmers.co.kr/learn/challenges?order=recent&languages=cpp)
+- https://swexpertacademy.com/main/code/problem/problemList.do
+- https://www.acmicpc.net/category/74 
 
 
 # 3단계
