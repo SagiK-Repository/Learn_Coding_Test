@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Master Algorithm %28MA%29\123Problem.cpp">
+    <ClCompile Include="Master Algorithm (MA)\Number_Baseball.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
