@@ -1,64 +1,93 @@
 #include <iostream>
-#include <string>
 #include <vector>
 
 using namespace std;
 
-bool AddNumber(int* array, int length, int pos)
+class Node
 {
-    if (array[pos] == 2 && array[pos + 1] == 2 && array[pos + 2] == 2) {
-        array[pos] = 0;
-        array[pos + 1] = 1;
-        array[pos + 2] = 1;
-        return true;
-    }
-    else if (array[pos] == 1 && array[pos + 1] == 1 && array[pos + 2] == 0) {
-        array[pos] = 2;
-        array[pos + 1] = 2;
-        array[pos + 2] = 2;
-        return true;
-    }
-    else if (array[pos] == 0 && array[pos + 1] == 0) {
-        array[pos]++;
-        array[pos + 1]++;
-        return true;
-    }
-    return false;
+public:
+    Node(const int data) : data(data) { }
+
+public:
+    const int data;
+    Node* left;
+    Node* right;
+};
+
+int Factorial(int num) {
+    if (num <= 1) return 1;
+    return num * Factorial(num - 1);
 }
 
-void AddArray(int* array, int number, int& count)
+struct Counter
 {
-    int pos = 0, decpos = 0;
-    while (true) {
-        if (AddNumber(array, number, pos)) {
-            count++;
-            continue;
-        }
-        else if (pos + 3 < decpos)
-        {
-            AddArray(array, decpos, count);
-            pos++;
-            continue;
-        }
-        else if (decpos + 2 == number) {
-            break;
-        }
-        else if (AddNumber(array, number, decpos)) {
-            pos = 0;
-            for (int zero = 0; zero < decpos; zero++)
-                array[zero] = 0;
-            count++;
-            continue;
-        }
-        decpos++;
+    int three, tow, one;
+
+    int GetCount() const {
+        return (int)(
+                            Factorial(three + tow + one) /
+                (Factorial(three) + Factorial(tow) + Factorial(one))
+            );
     }
+};
+
+Node* CreateThreeNode() {
+    Node* threeNode = new Node(3);
+    Node* twoNode = new Node(2);
+    threeNode->left = twoNode;
+    threeNode->right = new Node(1);
+    twoNode->left = new Node(1);
+    twoNode->right = new Node(1);
+    return threeNode;
+}
+
+Node* CreateTwoNode() {
+    Node* twoNode = new Node(2);
+    twoNode->left = new Node(1);
+    twoNode->right = new Node(1);
+    return twoNode;
+}
+
+vector<Node*> CreateMap(int number) {
+    vector<Node*> map((int)(number / 3), CreateThreeNode());
+
+    if (number % 3 == 1)
+        map.push_back(new Node(1));
+    else if (number % 3 == 2)
+        map.push_back(CreateTwoNode());
+
+    return map;
+}
+
+void DeleteTree(Node* root) {
+    if (root == nullptr) return;
+
+    DeleteTree(root->left);
+    DeleteTree(root->right);
+
+    delete root;
+}
+
+void WriteMap(Node* map, int* count, int* with, Counter* counter) {
+    if (map->left == nullptr) return;
+    WriteMap(map->left, count, with, counter);
+    cout << map->data << ", " << *count << ", " << *with
+        << ", " << counter->three<< ", " << counter->tow << ", " << counter->one << endl;
+    if (map->data == 2)
+        *with+=1;
+
+    //*count += counter->GetCount();
 }
 
 int CountNumber(int number) {
-    int count = 1; // 1+1+...+1+1
-    int* array = new int[number]();
+    vector<Node*> map = CreateMap(number);
+    int count = 1, with = 0;
+    Counter counter{ 0, 0, number };
 
-    AddArray(array, number, count);
+    for (auto node : map)
+        WriteMap(node, &count, &with, &counter);
+    
+
     return count;
 }
 
