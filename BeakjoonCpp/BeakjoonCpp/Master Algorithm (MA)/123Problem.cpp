@@ -3,17 +3,6 @@
 
 using namespace std;
 
-class Node
-{
-public:
-    Node(const int data) : data(data) { }
-
-public:
-    const int data;
-    Node* left;
-    Node* right;
-};
-
 int Factorial(int num) {
     if (num <= 1) return 1;
     return num * Factorial(num - 1);
@@ -24,69 +13,27 @@ struct Counter
     int three, tow, one;
 
     int GetCount() const {
+        if (three == 0 && tow == 0 && one == 0)
+            return 0;
+
         return (int)(
-                            Factorial(three + tow + one) /
-                (Factorial(three) + Factorial(tow) + Factorial(one))
-            );
+            Factorial(three + tow + one) /
+            (Factorial(three) * Factorial(tow) * Factorial(one)));;
     }
 };
 
-Node* CreateThreeNode() {
-    Node* threeNode = new Node(3);
-    Node* twoNode = new Node(2);
-    threeNode->left = twoNode;
-    threeNode->right = new Node(1);
-    twoNode->left = new Node(1);
-    twoNode->right = new Node(1);
-    return threeNode;
-}
-
-Node* CreateTwoNode() {
-    Node* twoNode = new Node(2);
-    twoNode->left = new Node(1);
-    twoNode->right = new Node(1);
-    return twoNode;
-}
-
-vector<Node*> CreateMap(int number) {
-    vector<Node*> map((int)(number / 3), CreateThreeNode());
-
-    if (number % 3 == 1)
-        map.push_back(new Node(1));
-    else if (number % 3 == 2)
-        map.push_back(CreateTwoNode());
-
-    return map;
-}
-
-void DeleteTree(Node* root) {
-    if (root == nullptr) return;
-
-    DeleteTree(root->left);
-    DeleteTree(root->right);
-
-    delete root;
-}
-
-void WriteMap(Node* map, int* count, int* with, Counter* counter) {
-    if (map->left == nullptr) return;
-    WriteMap(map->left, count, with, counter);
-    cout << map->data << ", " << *count << ", " << *with
-        << ", " << counter->three<< ", " << counter->tow << ", " << counter->one << endl;
-    if (map->data == 2)
-        *with+=1;
-
-    //*count += counter->GetCount();
-}
-
 int CountNumber(int number) {
-    vector<Node*> map = CreateMap(number);
-    int count = 1, with = 0;
-    Counter counter{ 0, 0, number };
+    vector<vector<Counter>> matrix((int)(number / 3) + 1, vector<Counter>((int)(number / 2) + 1));
+    int count = 0;
 
-    for (auto node : map)
-        WriteMap(node, &count, &with, &counter);
+    for (int i = 0; i < matrix.size(); ++i)
+        for (int j = 0; j < matrix[i].size(); ++j)
+            if (number - (3 * i) - (2 * j) >= 0)
+                matrix[i][j] = Counter{ i, j, number - (3 * i) - (2 * j) };
     
+    for (auto i : matrix)
+        for (auto j : i)
+            count += j.GetCount();
 
     return count;
 }
