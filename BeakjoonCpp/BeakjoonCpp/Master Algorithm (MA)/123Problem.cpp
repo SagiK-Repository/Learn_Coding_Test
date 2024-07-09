@@ -1,64 +1,40 @@
 #include <iostream>
-#include <string>
 #include <vector>
 
 using namespace std;
 
-bool AddNumber(int* array, int length, int pos)
-{
-    if (array[pos] == 2 && array[pos + 1] == 2 && array[pos + 2] == 2) {
-        array[pos] = 0;
-        array[pos + 1] = 1;
-        array[pos + 2] = 1;
-        return true;
-    }
-    else if (array[pos] == 1 && array[pos + 1] == 1 && array[pos + 2] == 0) {
-        array[pos] = 2;
-        array[pos + 1] = 2;
-        array[pos + 2] = 2;
-        return true;
-    }
-    else if (array[pos] == 0 && array[pos + 1] == 0) {
-        array[pos]++;
-        array[pos + 1]++;
-        return true;
-    }
-    return false;
+int Factorial(int num) {
+    if (num <= 1) return 1;
+    return num * Factorial(num - 1);
 }
 
-void AddArray(int* array, int number, int& count)
+struct Counter
 {
-    int pos = 0, decpos = 0;
-    while (true) {
-        if (AddNumber(array, number, pos)) {
-            count++;
-            continue;
-        }
-        else if (pos + 3 < decpos)
-        {
-            AddArray(array, decpos, count);
-            pos++;
-            continue;
-        }
-        else if (decpos + 2 == number) {
-            break;
-        }
-        else if (AddNumber(array, number, decpos)) {
-            pos = 0;
-            for (int zero = 0; zero < decpos; zero++)
-                array[zero] = 0;
-            count++;
-            continue;
-        }
-        decpos++;
+    int three, tow, one;
+
+    int GetCount() const {
+        if (three == 0 && tow == 0 && one == 0)
+            return 0;
+
+        return (int)(
+            Factorial(three + tow + one) /
+            (Factorial(three) * Factorial(tow) * Factorial(one)));;
     }
-}
+};
 
 int CountNumber(int number) {
-    int count = 1; // 1+1+...+1+1
-    int* array = new int[number]();
+    vector<vector<Counter>> matrix((int)(number / 3) + 1, vector<Counter>((int)(number / 2) + 1));
+    int count = 0;
 
-    AddArray(array, number, count);
+    for (int i = 0; i < matrix.size(); ++i)
+        for (int j = 0; j < matrix[i].size(); ++j)
+            if (number - (3 * i) - (2 * j) >= 0)
+                matrix[i][j] = Counter{ i, j, number - (3 * i) - (2 * j) };
+    
+    for (auto i : matrix)
+        for (auto j : i)
+            count += j.GetCount();
+
     return count;
 }
 
