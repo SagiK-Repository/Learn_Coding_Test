@@ -4,10 +4,19 @@
 using namespace std;
 
 struct BaseBall {
-    int number;
+    string number;
     int strike;
     int ball;
 };
+
+struct TreeNode {
+    string data;
+    vector<string> noneDatas;
+    vector<TreeNode*> children;
+
+    TreeNode(string dara, vector<string> noneDatas) : data(data), noneDatas(noneDatas) {}
+};
+
 
 int Predicted_Cases(vector<BaseBall> input)
 {
