@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -38,12 +39,14 @@ static vector<int> GenerateNumbersExcept(const vector<int>& exclude) { // const 
     return result;
 }
 
-static string ChoiseString(string input, int choise1 = -1, int choise2 = -1) {
+static string ChoiseString(string input, bool choise1, bool choise2, bool choise3) {
     string output = "xxx";
-    if (choise1 != -1)
-        output[choise1] = input[choise1];
-    if (choise2 != -1)
-        output[choise2] = input[choise2];
+    if (choise1)
+        output[0] = input[0];
+    if (choise2)
+        output[1] = input[1];
+    if (choise3)
+        output[2] = input[2];
     return output;
 }
 
@@ -51,22 +54,42 @@ static int Predicted_Cases(vector<BaseBall> input)
 {
     vector<TreeNode> answers;
     for (const auto& question : input) {
-        if (question.strike == 0 && question.ball == 0) {
+        if (question.strike == 0 && question.ball == 0) { // ball이 0 ~ 3
             vector<int> exceptNumbers = ConvertStringToVector(question.number);
             TreeNode answer{ "xxx", exceptNumbers, exceptNumbers, exceptNumbers };
+            answers.push_back(answer);
         }
-        else if (question.strike == 1 && question.ball == 0) {
+        else if (question.strike == 1 && question.ball == 0) { // ball이 0~2
             for (int i = 0; i < 3; i++) {
-                string rightData = ChoiseString(question.number, i);
+                string rightData = ChoiseString(question.number, i == 0, i == 1, i == 2);
                 vector<int> rightException = ConvertStringToVector(rightData);
                 vector<int>  questionException = ConvertStringToVector(question.number);
-                TreeNode answer{ rightData, GenerateNumbersExcept(rightException), GenerateNumbersExcept(questionException) , GenerateNumbersExcept(questionException) };
+                TreeNode answer{ rightData, i == 0 ? GenerateNumbersExcept(rightException) : GenerateNumbersExcept(questionException)
+                                          , i == 1 ? GenerateNumbersExcept(rightException) : GenerateNumbersExcept(questionException)
+                                          , i == 2 ? GenerateNumbersExcept(rightException) : GenerateNumbersExcept(questionException) };
+                answers.push_back(answer);
             }
         }
+        else if (question.strike == 2 && question.ball == 0) { // ball이 0 아니면 1
+            int index = 1;
+            for (int i = 0; i < 3; i++) {
+                string rightData = ChoiseString(question.number, i < 2, i != 2, i > 0);
+                vector<int> rightException = ConvertStringToVector(rightData);
+                vector<int> questionException = ConvertStringToVector(question.number);
+                TreeNode answer{ rightData, i < 2 ? GenerateNumbersExcept(rightException) : GenerateNumbersExcept(questionException)
+                                          , i != 2? GenerateNumbersExcept(questionException) : GenerateNumbersExcept(questionException)
+                                          , i > 0 ? GenerateNumbersExcept(questionException) : GenerateNumbersExcept(questionException) };
+                answers.push_back(answer);
+            }
+        }
+        else if (question.strike == 3)
+        {
+            string rightData = question.number;
+            vector<int> rightException = ConvertStringToVector(rightData);
+            TreeNode answer{ rightData, GenerateNumbersExcept(rightException), GenerateNumbersExcept(rightException) , GenerateNumbersExcept(rightException) };
+            answers.push_back(answer);
+        }
     }
-    //    for (int strike = 0; strike < question.strike; strike++)
-    //        for(int ball = 0; ball < question.ball; ball++)
-
 
     return 0;
 }
